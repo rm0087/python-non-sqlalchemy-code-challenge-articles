@@ -5,8 +5,6 @@ class Article:
                  "title":""}
     
     authors = []
-    articles = []
-    magazines = []
     
     def __init__(self, author, magazine, title):
         self.author = author
@@ -19,7 +17,6 @@ class Article:
     
     @author.setter
     def author(self, author):
-        global authors
         if isinstance(author, Author):
             self._author = author
             Article.test_dict["author"] = self.author.name
@@ -57,7 +54,7 @@ class Article:
         
         
 class Author:
-    articles_arr = []
+    
     
     def __init__(self, name):
         self.name = name
@@ -75,10 +72,11 @@ class Author:
             
 
     def articles(self):
-        for articles in Article.all:
-                if articles["author"] == self.name:
-                    self.articles_arr.append(articles)
-                return self.articles_arr
+        articles_arr = []
+        for article in Article.all:
+                if article["author"] == self.name:
+                    articles_arr.append(article)
+        return articles_arr
         
         def __init__(self, author, magazine, title):
             self.author = author
@@ -139,12 +137,16 @@ class Magazine:
     def contributing_authors(self):
         pass
 
-joe = Author("Joe")
-vogue = Magazine("Vogue", "Fashion")
-arttitle = "50 Ways to Not Pay Taxes"
-article00 = (joe, vogue, arttitle)
+author_1 = Author("Carry Bradshaw")
+author_2 = Author("Nathaniel Hawthorne")
+magazine = Magazine("Vogue", "Fashion")
+article_1 = Article(author_1, magazine, "How to wear a tutu with style")
+article_2 = Article(author_1, magazine, "Dating life in NYC")
+article_3 = Article(author_2, magazine, "How to be single and happy")
 
-moe = Author("Moe")
-wsj = Magazine("WSJ", "Business")
-arttitle2 = "100 Ways to go to Prison for Free"
-article01 = (moe, wsj, arttitle2) 
+# assert len(author_1.articles()) == 2
+# assert len(author_2.articles()) == 1
+# assert article_1 in author_1.articles()
+# assert article_2 in author_1.articles()
+# assert article_3 not in author_1.articles()
+# assert article_3 in author_2.articles()
