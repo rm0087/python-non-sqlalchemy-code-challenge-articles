@@ -6,8 +6,9 @@ class Article:
         self.author = author
         self.magazine = magazine
         self.title = title
+        Article.add_article_to_all(self)
 
-    @property ## AUTHOR ###############################################################
+    @property ## ARTICLE.AUTHOR ###############################################################
     def author(self):
         return self._author
     
@@ -21,7 +22,7 @@ class Article:
         else:
             print("Must be a valid author")
         
-    @property ## MAGAZINE ###############################################################
+    @property ## ARTICLE.MAGAZINE ###############################################################
     def magazine(self):
         return self._magazine
     
@@ -32,7 +33,7 @@ class Article:
         else:
             print("Must be a valid magazine")
 
-    @property ## TITLE ###############################################################
+    @property ## ARTICLE.TITLE ###############################################################
     def title(self):
         return self._title
     
@@ -40,18 +41,21 @@ class Article:
     def title(self, title):
         if isinstance(title, str) and 5 <= len(title) <= 50 and not hasattr(self, 'title'):
             self._title = title
-            Article.all.append(Article.test_dict.copy())
         else:
             print("Title must be a string between 5 and 50 characters")
+
+    @classmethod ## ARTICLE CLASS METHODS ###############################################################
+    def add_article_to_all(cls, article):
+        cls.all.append(article)
         
         
 class Author:
-    articles_arr = []
     
     def __init__(self, name):
         self.name = name
+        # self._articles_arr = []
 
-    @property
+    @property ## AUTHOR.NAME ###############################################################
     def name(self):
         return self._name
     
@@ -61,14 +65,12 @@ class Author:
             self._name = name
         else:
             print("Author name must be a string with at least 1 character!")
-            
-
+    
+    # @property ## AUTHOR.ARTICLES ###############################################################
     def articles(self):
-        for articles in Article.all:
-                if articles["author"] == self.name:
-                    self.articles_arr.append(articles)
-                return self.articles_arr
-        
+        return [article for article in Article.all if article.author == self]
+    
+    
         def __init__(self, author, magazine, title):
             self.author = author
             self.magazine = magazine
@@ -78,8 +80,6 @@ class Author:
         def author(self):
             pass
         
-
-    
         def magazines(self):
             pass
 
@@ -94,7 +94,7 @@ class Magazine:
         self.name = name
         self.category = category
 
-    @property #name
+    @property ## MAGAZINE.NAME ###############################################################
     def name(self):
         return self._name
     @name.setter
@@ -104,7 +104,7 @@ class Magazine:
         else:
             print("Magazine name must be a string between 2 and 16 characters")
 
-    @property #category
+    @property ## MAGAZINE.CATEGORY ###############################################################
     def category(self):
         return self._category
     
@@ -118,6 +118,8 @@ class Magazine:
     
     def articles(self):
         pass
+
+                
 
     def contributors(self):
         pass
