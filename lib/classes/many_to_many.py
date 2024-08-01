@@ -67,6 +67,7 @@ class Author:
     
     ## AUTHOR.ARTICLES ###############################################################
     def articles(self):
+
         return [article for article in Article.all if article.author == self]
     
     def magazines(self):
